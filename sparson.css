@@ -1,0 +1,17 @@
+
+body {
+    background-color: #000;
+}
+
+td {
+    color: #0F0;
+    padding: 10px;
+}
+
+th {
+    color: #FF0;
+}
+
+table {
+    border-spacing: 0px;
+}
