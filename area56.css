@@ -1,0 +1,248 @@
+@font-face {
+    font-family: 'microknight';
+    src: url('webfontkit/MicroKnight_v1.0-webfont.eot');
+    src: url('webfontkit/MicroKnight_v1.0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/MicroKnight_v1.0-webfont.woff2') format('woff2'),
+         url('webfontkit/MicroKnight_v1.0-webfont.woff') format('woff'),
+         url('webfontkit/MicroKnight_v1.0-webfont.ttf') format('truetype'),
+         url('webfontkit/MicroKnight_v1.0-webfont.svg#microknightregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: "topaz";
+    src: url('webfontkit/Topaz_a500_v1.0-webfont.eot');
+    src: url('webfontkit/Topaz_a500_v1.0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/Topaz_a500_v1.0-webfont.woff2') format('woff2'),
+         url('webfontkit/Topaz_a500_v1.0-webfont.woff') format('woff'),
+         url('webfontkit/Topaz_a500_v1.0-webfont.ttf') format('truetype'),
+         url('webfontkit/Topaz_a500_v1.0-webfont.svg#topaz_a500a1000a2000regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: "area56_h1";
+    src: url('webfontkit/ka1-webfont.eot');
+    src: url('webfontkit/ka1-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/ka1-webfont.woff2') format('woff2'),
+         url('webfontkit/ka1-webfont.woff') format('woff'),
+         url('webfontkit/ka1-webfont.ttf') format('truetype'),
+         url('webfontkit/ka1-webfont.svg#karmatic_arcaderegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+	font-family: "area56_link";
+    src: url('webfontkit/RepetitionScrolling-webfont.eot');
+    src: url('webfontkit/RepetitionScrolling-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/RepetitionScrolling-webfont.woff2') format('woff2'),
+         url('webfontkit/RepetitionScrolling-webfont.woff') format('woff'),
+         url('webfontkit/RepetitionScrolling-webfont.ttf') format('truetype'),
+         url('webfontkit/RepetitionScrolling-webfont.svg#repetition_scrollingregular') format('svg');
+         url('webfontkit/RepetitionScrolling-webfont.svg#repetition_scrollingregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    padding: 10px;
+    margin: 0px;
+
+    background-image:url("images/background.jpg");
+    background-size: 100%;
+
+    #background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: #07a; 
+    cursor: url(amiga.cur), url(amiga.cur), default;;
+}
+
+.innerbody {
+    background-image: none;
+    #background-color: #020;	
+    border: 1px solid black;	
+    padding: 10px;
+}
+
+.raster {
+	font-family: "microknight";
+	font-size: 10vw;
+	font-style: normal; 
+	text-decoration: none;
+	color: #00a;
+	background: -webkit-linear-gradient(#F0F, #F00, #FF0, #0F0);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;   
+	background: -ms-linear-gradient(#F0F, #F00, #FF0, #0F0);
+	-ms-background-clip: text;  
+	-ms-background-clip: text-shadow;
+	-ms-text-fill-color: transparent;
+}
+
+a {
+    cursor: url(amiga.cur), url(amiga.cur), default;;
+
+}
+
+.area56toplink {
+   text-align: center;
+   font-family: "microknight";
+   font-size: 10vw;
+   font-style: normal; 
+   text-decoration: none;
+   color: #00a;
+   text-shadow: 0 0 13px #FF0, 0 0 25px #0F0;
+}
+
+.area56toplink:hover {
+   text-shadow: 0 0 13px #ffa, 0 0 25px #ff0;
+   color: #08f;
+}
+
+
+
+.area56flexbox {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.area56flexitemsdefault {
+    width: 300px;
+    height: 250px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+}
+		
+ .area56flexitem1 {
+    width: 300px; #@<property unused>
+    height: 250px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 200px;
+}
+	
+ .area56flexitem2 {
+    width: 750px;
+    height: 250px;
+    flex-grow: <property unused>;#1;
+    flex-shrink: <property unused>;#0;
+    flex-basis: <property unused>;#200px;
+}
+
+.area56toplinkstransform {
+    position: relative;
+    left: -100px;
+	padding: 10px;
+	-webkit-transform: rotate(6deg);
+	-ms-transform: rotate(6deg);
+        -moz-transform: rotate(6deg);
+	# matrix(0.99692620785908, 0.92020143325669, -0.72020143325669, 0.939692620785908, 0, 0);
+	width:500px;
+}
+
+.area56toplinks {
+   font-family: "area56_link";
+   font-size: 4vw; #px;
+   font-style: normal; 
+   text-decoration: none;
+   color: #FF0;
+   text-shadow: 0 0 13px #FF0, 0 0 25px #0F0;
+}
+
+.area56toplinks:hover {
+    color: #00F;
+    #background-color: #FF0;
+    text-shadow: 0 0 45px #FF0;
+}
+
+.area56musiclinks {
+   padding-right: 16px;
+   font-family: "topaz";
+   font-size: 30px;
+   font-style: normal; 
+   text-decoration: none;
+   color: #88f;
+   text-shadow: 2 2 25px #000;
+}
+.area56musiclinks:hover {
+   #color: #090;
+   
+   background: -webkit-linear-gradient(#F00, #FF0);
+  -webkit-background-clip: text;  
+  -webkit-text-fill-color: transparent;
+   background: -ms-linear-gradient(#F00, #FF0);
+  -ms-background-clip: text; 
+  -ms-text-fill-color: transparent;
+   background: -moz-linear-gradient(#F00, #FF0);
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  
+  
+  //text-shadow: 2 2 25px #FFF;
+}
+
+ .area56musiclinks:after {
+    text-shadow: 10px 10px 11px #000;
+    gcolor: transparent;
+  }
+
+
+.area56nowplaying {
+   margin: 15px;
+   padding: 16px;
+   font-family: "area56_link";
+   font-size: 30px;
+   font-style: normal; 
+   text-decoration: none;
+   #color: #090;
+   text-shadow: 2 2 25px #FFF;
+   background: -webkit-linear-gradient(#F0F, #F00, #FF0, #0F0);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;   
+   background: -ms-linear-gradient(#F0F, #F00, #FF0, #0F0);
+  -ms-background-clip: text;  
+  -ms-background-clip: text-shadow;
+  -ms-text-fill-color: transparent;
+}
+
+
+.area56musicframe {
+	margin-left: 50px;
+        margin-right: 50px;
+        # border: #0F0 2px dotted; 
+	background-color: rgba(55, 55, 255, .6);
+  	# background-color: #999;
+	width:91vw;;
+	#seamless;
+	height: 400px;
+	-moz-border-radius: 12px;
+        -webkit-border-radius: 12px;
+	-ms-border-radius: 12px;
+        border-radius: 12px;
+}
+
+::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+	color: #000;
+}
+
+::-webkit-scrollbar-track {
+    color: #00f;
+}
