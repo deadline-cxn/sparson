@@ -74,5 +74,3 @@ function ping($host, $timeout = 1) {
     socket_close($socket);
     return $result;
 }
-
-
