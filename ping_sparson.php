@@ -6,9 +6,14 @@ $hostname = urlencode(gethostname());
 $uname	  = urlencode(php_uname());
 $os       = urlencode(PHP_OS);
 $distro_i       = get_distro();
+if(isset($distro_i["DISTRIB_ID"])) {
 $distro         = urlencode($distro_i["DISTRIB_ID"]);
 $distroversion  = urlencode($distro_i["DISTRIB_RELEASE"]);
 $distrocodename = urlencode($distro_i["DISTRIB_CODENAME"]);
+}
+else 
+$distro=urlencode($distro_i["PRETTY_NAME"]);
+
 
 $url="http://sparson.com?a=p";
 $url.="&hostname=$hostname";
