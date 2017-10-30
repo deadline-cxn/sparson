@@ -38,25 +38,35 @@ function show_hosts() {
     while($row=$r->fetch_object()) {
         echo "<tr>";
         
-        //echo "<td>$row->id</td>";
-        echo "<td>$row->hostname<br>";
+        echo "<td>";
         
-        echo "$row->os $row->distro ";
+        echo "<table border=0><tr><td>";
+        $dir=scandir("images");
+        foreach($dir as $k => $v) {
+            $name=explode(".",$v);
+            $name=strtolower($name[0]);
+            if(stristr(strtolower($row->distro),$name)) {
+                $rut=strtolower($row->distro);
+               echo "<img src=\"images/$v\" width=100>";
+               break;
+            }
+        }
+        echo "</td><td>";
+        
+        echo "$row->hostname<br><br>";
+        echo "$row->os<br>";
+        echo "$row->distro ";
         echo "$row->distroversion ";
-        echo "$row->distrocodename ";
-
+        echo "$row->distrocodename<br>";
+        
+        echo "</td></tr></table>";
+        
         
         
         echo "</td>";
         
-        
-        
-        
-        
         echo "<td>$row->ip_address";
-
         echo "<table border=0><tr>";
-        
         echo "<td>";
         
         $c="ping $row->ip_address -c 1";
@@ -87,41 +97,26 @@ function show_hosts() {
             $_SESSION[$row->hostname]['pingtimes'][$i+1];
         }
         $_SESSION[$row->hostname]['pingtimes'][8]=$ping_a;
-        
-
-        // imageline ( resource $image , int $x1 , int $y1 , int $x2 , int $y2 , int $color )
-    
+  
         $out="?a=pingline&w=100&h=50";
         for($i=8;$i>0;$i--) {
-            //echo $_SESSION[$row->hostname]['pingtimes'][$i]."<br>";
             $out.="&pl$i=".$_SESSION[$row->hostname]['pingtimes'][$i];
         }
         
-        //echo "<BR>
-        
         echo "<img src=\"/genimg.php$out\"> ";
-        //<BR>";
-
         
         unset($ping_a);
         unset($ping_result);
         
-        /*echo "<br>";
-        echo time()."<br>";
-        echo date("Y-d-m H:i:s ",time())."<br>";
-        echo date("U",time())."<br>";
-        
-        echo date("Y-d-m H:i:s",strtotime($row->timestamp))."<br>";
-        echo date("U",strtotime($row->timestamp))."<br>";
-        */
         $current_time=time();
         $last_update_time=strtotime($row->timestamp);
         $time_transpired=$current_time-$last_update_time;
-        
-        // echo "ct[$current_time]<br>lu[$last_update_time]<br>tt[$time_transpired]<br>";
-        if($time_transpired>$GLOBALS['expired_host_time']) {
-            $query="delete from `hosts` where `hostname` = '$row->hostname' limit 1";
-            lib_mysql_query($query);
+
+        if(!$row->do_not_delete) {
+            if($time_transpired>$GLOBALS['expired_host_time']) {
+                $query="delete from `hosts` where `hostname` = '$row->hostname' limit 1";
+                lib_mysql_query($query);
+            }
         }
         
 
