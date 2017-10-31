@@ -28,6 +28,9 @@ function show_header() {
 }
 
 function show_hosts() {
+    $td[0]="#000";
+    $td[1]="#030"; 
+    $tdc=0;
     echo "<table border=0>";
     echo "<tr>";
     echo "<th>Host</th>";
@@ -36,9 +39,11 @@ function show_hosts() {
     echo "</tr>";
     $r=lib_mysql_query('select * from hosts order by hostname');
     while($row=$r->fetch_object()) {
+        $tdc=$tdc+1; if($tdc>1) $tdc=0;
+
         echo "<tr>";
         
-        echo "<td>";
+        echo "<td style='background-color: ".$td[$tdc]."' >";
         
         echo "<table border=0><tr><td>";
         $dir=scandir("images");
@@ -47,7 +52,7 @@ function show_hosts() {
             $name=strtolower($name[0]);
             if(stristr(strtolower($row->distro),$name)) {
                 $rut=strtolower($row->distro);
-               echo "<img src=\"images/$v\" width=100>";
+               echo "<img src=\"images/$v\" width=80>";
                break;
             }
         }
@@ -65,7 +70,8 @@ function show_hosts() {
         
         echo "</td>";
         
-        echo "<td>$row->ip_address";
+        echo "<td style='background-color: ".$td[$tdc]."' >";
+        echo "$row->ip_address";
         echo "<table border=0><tr>";
         echo "<td>";
         
@@ -98,7 +104,7 @@ function show_hosts() {
         }
         $_SESSION[$row->hostname]['pingtimes'][8]=$ping_a;
   
-        $out="?a=pingline&w=100&h=50";
+        $out="?a=pingline&w=90&h=50";
         for($i=8;$i>0;$i--) {
             $out.="&pl$i=".$_SESSION[$row->hostname]['pingtimes'][$i];
         }
@@ -127,13 +133,15 @@ function show_hosts() {
         echo "</td>";
         echo "</td></tr></table>";
         
-        echo "<td>$row->timestamp</td>";
+        echo "<td style='background-color: ".$td[$tdc]."' >";
+        echo "$row->timestamp";
+        echo "</td>";
 
         echo "</tr>";
     }
     echo "</table>";
     
-    echo "<meta http-equiv=\"refresh\" content=\"1\">";
+    echo "<meta http-equiv=\"refresh\" content=\"5\">";
     
 }
 
@@ -151,22 +159,17 @@ function update_host() {
         $id = guid(1);        
         $q = "insert into `hosts` ( `id`, `hostname`,  `ip_address`,`timestamp`, `os`,  `distro`,  `distroversion`,  `distrocodename` )
                            values ('$id','$hostname','$REMOTE_ADDR','$datetime','$os', '$distro', '$distroversion', '$distrocodename' );";
-        //echo "<BR>$q<BR>";
         lib_mysql_query($q);
         $q = "select * from `hosts` where `hostname`='$hostname';";
-        // echo "<BR>$q<BR>";
         $r=lib_mysql_query($q);
     }
-    
     $row=$r->fetch_assoc();
-    
-    
-    $q="update `hosts` set `ip_address` = '$REMOTE_ADDR' where `hostname`='$hostname'"; lib_mysql_query($q);
-    $q="update `hosts` set `os` = '$os' where `hostname`='$hostname'";                  lib_mysql_query($q);
-    $q="update `hosts` set `distro` = '$distro' where `hostname`='$hostname'";          lib_mysql_query($q);
-    $q="update `hosts` set `distroversion` = '$distroversion' where `hostname`='$hostname'";          lib_mysql_query($q);
-    $q="update `hosts` set `distrocodename` = '$distrocodename' where `hostname`='$hostname'";          lib_mysql_query($q);
-    $q="update `hosts` set `timestamp` = '$datetime' where `hostname` = '$hostname'";   lib_mysql_query($q);
+    $q="update `hosts` set `ip_address` = '$REMOTE_ADDR' where `hostname`='$hostname'";         lib_mysql_query($q);
+    $q="update `hosts` set `os` = '$os' where `hostname`='$hostname'";                          lib_mysql_query($q);
+    $q="update `hosts` set `distro` = '$distro' where `hostname`='$hostname'";                  lib_mysql_query($q);
+    $q="update `hosts` set `distroversion` = '$distroversion' where `hostname`='$hostname'";    lib_mysql_query($q);
+    $q="update `hosts` set `distrocodename` = '$distrocodename' where `hostname`='$hostname'";  lib_mysql_query($q);
+    $q="update `hosts` set `timestamp` = '$datetime' where `hostname` = '$hostname'";           lib_mysql_query($q);
 
 
 }

@@ -11,8 +11,15 @@ $distro         = urlencode($distro_i["DISTRIB_ID"]);
 $distroversion  = urlencode($distro_i["DISTRIB_RELEASE"]);
 $distrocodename = urlencode($distro_i["DISTRIB_CODENAME"]);
 }
-else 
-$distro=urlencode($distro_i["PRETTY_NAME"]);
+else {
+    $distro=urlencode($distro_i["PRETTY_NAME"]);
+    $distroex=explode(" ",$distro);
+    $distro=$distroex[0];
+    $distroversion=$distroex[2];
+    $distrocodename=$distroex[3];
+    $distrocodename=str_replace("(","",$distrocodename);
+    $distrocodename=str_replace(")","",$distrocodename);
+}
 
 
 $url="http://sparson.com?a=p";
