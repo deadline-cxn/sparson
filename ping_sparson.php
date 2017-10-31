@@ -29,6 +29,9 @@ $url.="&distro=$distro";
 $url.="&distroversion=$distroversion";
 $url.="&distrocodename=$distrocodename";
 
+$drives=urlencode(get_drives());
+$url.="&drives=$drives";
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Check for update
 $current_time=time();

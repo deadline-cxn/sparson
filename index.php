@@ -60,11 +60,15 @@ function show_hosts() {
         }
         echo "</td><td>";
         
-        echo "$row->hostname<br><br>";
-        echo "$row->os<br>";
+        echo "$row->hostname";
+        echo "<hr>";
+        echo "$row->os ";
         echo "$row->distro ";
         echo "$row->distroversion ";
         echo "$row->distrocodename<br>";
+        echo "<hr>";
+        
+        echo nl2br($row->drives);
         
         echo "</td></tr></table>";
         
@@ -138,6 +142,9 @@ function show_hosts() {
         echo "<td style='background-color: ".$td[$tdc]."' >";
         echo "$row->timestamp";
         echo "</td>";
+        
+        //echo "<td style='background-color: ".$td[$tdc]."' >";
+        //echo "</td>";
 
         echo "</tr>";
     }
@@ -155,12 +162,13 @@ function update_host() {
     $distro=$_REQUEST['distro'];
     $distroversion=$_REQUEST['distroversion'];
     $distrocodename=$_REQUEST['distrocodename'];
+    $drives=$_REQUEST['drives'];
     
     $r=lib_mysql_query("select * from hosts where hostname='$hostname';");
     if($r->num_rows==0){
         $id = guid(1);        
-        $q = "insert into `hosts` ( `id`, `hostname`,  `ip_address`,`timestamp`, `os`,  `distro`,  `distroversion`,  `distrocodename` )
-                           values ('$id','$hostname','$REMOTE_ADDR','$datetime','$os', '$distro', '$distroversion', '$distrocodename' );";
+        $q = "insert into `hosts` ( `id`, `hostname`,  `ip_address`,`timestamp`, `os`,  `distro`,  `distroversion`,  `distrocodename`, `drives` )
+                           values ('$id','$hostname','$REMOTE_ADDR','$datetime','$os', '$distro', '$distroversion', '$distrocodename', '$drives' );";
         lib_mysql_query($q);
         $q = "select * from `hosts` where `hostname`='$hostname';";
         $r=lib_mysql_query($q);
@@ -172,6 +180,7 @@ function update_host() {
     $q="update `hosts` set `distroversion` = '$distroversion' where `hostname`='$hostname'";    lib_mysql_query($q);
     $q="update `hosts` set `distrocodename` = '$distrocodename' where `hostname`='$hostname'";  lib_mysql_query($q);
     $q="update `hosts` set `timestamp` = '$datetime' where `hostname` = '$hostname'";           lib_mysql_query($q);
+    $q="update `hosts` set `drives` = '$drives' where `hostname` = '$hostname'";                lib_mysql_query($q);
 
 
 }

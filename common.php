@@ -91,3 +91,31 @@ function get_distro() {
         return $vars;
     }
 }
+
+function get_drives() {
+    // echo "Drive " . $dO->DriveLetter . ": - " . $type[$dO->DriveType] . " - " . $n . " - " . $s . "<br>";
+    exec("df -h -t ext4",$r);
+    $o="";
+    for($i=1;$i<count($r);$i++) {
+        $r[$i]=str_replace("  "," ",$r[$i]);
+        $r[$i]=str_replace("  "," ",$r[$i]);
+        $r[$i]=str_replace("  "," ",$r[$i]);
+        $x=explode(" ",$r[$i]);
+        
+        $disk=$x[0];
+        $size=$x[1];
+        $used=$x[2];
+        $avail=$x[3];
+        $pct =$x[4];
+        
+        $o.="$disk $avail/$size ($pct)\n";
+        
+        // foreach($x as $k => $v) {            echo " $k = $v\n";        }
+    }
+    echo $o;
+    return $o;
+}
+function file_size($size)  { 
+    $filesizename = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB"); 
+    return $size ? round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $filesizename[$i] : '0 Bytes'; 
+} 
