@@ -21,7 +21,6 @@ else {
     $distrocodename=str_replace(")","",$distrocodename);
 }
 
-
 $url="http://sparson.com?a=p";
 $url.="&hostname=$hostname";
 $url.="&os=$os";
@@ -29,6 +28,15 @@ $url.="&distro=$distro";
 $url.="&distroversion=$distroversion";
 $url.="&distrocodename=$distrocodename";
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Check for update
+$current_time=time();
+$last_update_check=file_get_contents("update_check");
+if(  $last_update_check < 0 || 
+    ($current_time - $last_update_check) > 5000) {
+    file_put_contents("update_check",$current_time);
+    echo system("git pull");
+}
+
+
 $x=file_get_contents($url);
-
-

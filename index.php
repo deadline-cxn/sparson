@@ -3,6 +3,7 @@
 // SPARSON.COM 
 include("config.php");
 include("common.php");
+$GLOBALS['expired_host_time'] = 310;
 
 session_start();
 // echo $UPDATE_INTERVAL;

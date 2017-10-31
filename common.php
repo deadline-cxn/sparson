@@ -75,31 +75,19 @@ function ping($host, $timeout = 1) {
     return $result;
 }
 function get_distro() {
-    if (strtolower(substr(PHP_OS, 0, 5)) === 'linux')
-    {
+    if (strtolower(substr(PHP_OS, 0, 5)) === 'linux') {
         $vars = array();
         $files = glob('/etc/*-release');
-
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
             $lines = array_filter(array_map(function($line) {
-
-                // split value from key
-                $parts = explode('=', $line);
-
-                // makes sure that "useless" lines are ignored (together with array_filter)
-                if (count($parts) !== 2) return false;
-
-                // remove quotes, if the value is quoted
-                $parts[1] = str_replace(array('"', "'"), '', $parts[1]);
+                $parts = explode('=', $line); // split value from key
+                if (count($parts) !== 2) return false; // makes sure that "useless" lines are ignored (together with array_filter)
+                $parts[1] = str_replace(array('"', "'"), '', $parts[1]); // remove quotes, if the value is quoted
                 return $parts;
-
             }, file($file)));
-
             foreach ($lines as $line)
                 $vars[$line[0]] = $line[1];
         }
-
         return $vars;
     }
 }
