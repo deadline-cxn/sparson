@@ -23,7 +23,7 @@ else {
 }
 
 $url="http://sparson.com?a=p";
-$url.="&hostname=$hostname";
+$url.="&hostname=fff$hostname";
 $url.="&os=$os";
 $url.="&distro=$distro";
 $url.="&distroversion=$distroversion";
@@ -38,6 +38,4 @@ if(  $last_update_check < 0 ||
     file_put_contents("update_check",$current_time);
     echo system("git pull");
 }
-
-
 $x=file_get_contents($url);
