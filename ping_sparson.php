@@ -36,8 +36,15 @@ $last_update_check=file_get_contents("update_check");
 if(  $last_update_check < 0 || 
     ($current_time - $last_update_check) > 5000) {
     file_put_contents("update_check",$current_time);
-    echo system("git pull");
+    exec("git pull",$r);
+    $o="";
+    foreach($r as $k => $v) {
+         $o.=$v."\n";
+    }
+    $f=fopen("update.log","a");
+    fputs($f,$o);
+    fclose($f);
 }
 
-
 $x=file_get_contents($url);
+
