@@ -23,7 +23,7 @@ else {
 }
 
 $url="http://sparson.com?a=p";
-$url.="&hostname=gg_$hostname";
+$url.="&hostname=$hostname";
 $url.="&os=$os";
 $url.="&distro=$distro";
 $url.="&distroversion=$distroversion";
