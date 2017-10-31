@@ -7,11 +7,9 @@ if(fif("sparson.php",$cronfile_l)) {
 else {
   $f=fopen($cronfile_l,"a");
   if($f) {
-    $c="*/5 * * * * root php ";///home/sparson/sparson/ping_sparson.php\n";
-    $c.=getcwd()."/ping_sparson.php\n";
+    $c="*/5 * * * * root php ".getcwd()."/ping_sparson.php\n";
     echo "WRITING [$c] to [$cronfile_l]\n";
     fwrite($f,$c);
     fclose($f);
   }
 }
-

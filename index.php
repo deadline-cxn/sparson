@@ -34,7 +34,7 @@ function show_hosts() {
     echo "<th>Network</th>";
     echo "<th>Last Ping</th>";
     echo "</tr>";
-    $r=lib_mysql_query('select * from hosts');
+    $r=lib_mysql_query('select * from hosts order by hostname');
     while($row=$r->fetch_object()) {
         echo "<tr>";
         
