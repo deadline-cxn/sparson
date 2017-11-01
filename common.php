@@ -91,7 +91,6 @@ function get_distro() {
         return $vars;
     }
 }
-
 function get_drives() {
     // echo "Drive " . $dO->DriveLetter . ": - " . $type[$dO->DriveType] . " - " . $n . " - " . $s . "<br>";
     exec("df -h -t ext4",$r);
@@ -102,7 +101,7 @@ function get_drives() {
         $r[$i]=str_replace("  "," ",$r[$i]);
         $x=explode(" ",$r[$i]);
         
-        $disk=$x[0];
+        $disk=str_trunc($x[0],16);
         $size=$x[1];
         $used=$x[2];
         $avail=$x[3];
@@ -118,4 +117,11 @@ function get_drives() {
 function file_size($size)  { 
     $filesizename = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB"); 
     return $size ? round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $filesizename[$i] : '0 Bytes'; 
-} 
+}
+function str_trunc($str,$max_len) {
+	if(strlen($str) > $max_len ) {
+		$str = substr(trim($str),0,$max_len);
+		$str = $str.'...';
+	}
+	return $str;
+}
