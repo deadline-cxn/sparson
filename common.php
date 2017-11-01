@@ -106,8 +106,9 @@ function get_drives() {
         $used=$x[2];
         $avail=$x[3];
         $pct =$x[4];
+        $mount =$x[5];
         
-        $o.="$disk $avail/$size ($pct)\n";
+        $o.="$disk $mount $avail/$size ($pct)\n";
         
         // foreach($x as $k => $v) {            echo " $k = $v\n";        }
     }
