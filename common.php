@@ -93,7 +93,7 @@ function get_distro() {
 }
 function get_drives() {
     // echo "Drive " . $dO->DriveLetter . ": - " . $type[$dO->DriveType] . " - " . $n . " - " . $s . "<br>";
-    exec("df -h -t ext4",$r);
+    exec("df -h -t ext4 -t xfs",$r);
     $o="";
     for($i=1;$i<count($r);$i++) {
         $r[$i]=str_replace("  "," ",$r[$i]);
