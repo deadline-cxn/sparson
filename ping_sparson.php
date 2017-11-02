@@ -34,21 +34,22 @@ $url.="&drives=$drives";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Check for update
-$current_time=time();
-$last_update_check=file_get_contents("update_check");
-if(  $last_update_check < 0 || 
-    ($current_time - $last_update_check) > 50) {
-    $dir = "/home/sparson/sparson";
-    if(gethostname()=="area56") $dir = "/var/www/sparson.com/html";
-    file_put_contents("update_check",$current_time);
-    exec("cd $dir;git pull",$r);
-    $o="";
-    foreach($r as $k => $v) {
-         $o.=$v."\n";
+if(gethostname()!="area56") {
+    $current_time=time();
+    $last_update_check=file_get_contents("update_check");
+    if(  $last_update_check < 0 || 
+        ($current_time - $last_update_check) > 50) {
+        $dir = "/home/sparson/sparson";
+        file_put_contents("update_check",$current_time);
+        exec("cd $dir;git pull",$r);
+        $o="";
+        foreach($r as $k => $v) {
+             $o.=$v."\n";
+        }
+        $f=fopen("update.log","a");
+        fputs($f,$o);
+        fclose($f);
     }
-    $f=fopen("update.log","a");
-    fputs($f,$o);
-    fclose($f);
 }
 
 $x=file_get_contents($url);
