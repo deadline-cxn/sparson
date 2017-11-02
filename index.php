@@ -18,7 +18,16 @@ if(isset($a)) {
 }
 
 show_header();
+echo "<table border=0>";
+echo "<tr>";
+echo "<td>";
 show_hosts();
+echo "</td>";
+echo "<td valign=top>";
+show_hosts_shortlist();
+echo "</td>";
+echo "</tr>";
+echo "</table>";
 
 function show_header() {
     echo "<html>";
@@ -29,15 +38,26 @@ function show_header() {
     echo "</head>";
 }
 
+function show_hosts_shortlist() {
+    $r=lib_mysql_query('select * from hosts order by hostname');
+    echo "$r->num_rows hosts reporting<br>";
+    while($row=$r->fetch_object()) {
+        while(strlen($row->ip_address)<13) $row->ip_address.="_";
+        echo $row->ip_address.":".$row->hostname."<BR>";
+        foreach($row as $k => $v) {
+        }
+    }
+}
+
 function show_hosts() {
-    $td[0]="#000";
-    $td[1]="#030"; 
+    $td[0]="#020";
+    $td[1]="#040"; 
     $tdc=0;
     echo "<table border=0>";
     echo "<tr>";
     echo "<th>Host</th>";
     echo "<th>Network</th>";
-    echo "<th>Last Ping</th>";
+    //echo "<th>Last Ping</th>";
     echo "</tr>";
     $r=lib_mysql_query('select * from hosts order by hostname');
     while($row=$r->fetch_object()) {
@@ -77,7 +97,7 @@ function show_hosts() {
         echo "</td>";
         
         echo "<td style='background-color: ".$td[$tdc]."' >";
-        echo "$row->ip_address";
+        echo "<center>$row->ip_address ";
         echo "<table border=0><tr>";
         echo "<td>";
         
@@ -110,8 +130,8 @@ function show_hosts() {
         }
         $_SESSION[$row->hostname]['pingtimes'][8]=$ping_a;
   
-        $out="?a=pingline&w=90&h=50";
-        for($i=8;$i>0;$i--) {
+        $out="?a=pingline&w=90&h=80";
+        for($i=8;$i>-1;$i--) {
             $out.="&pl$i=".$_SESSION[$row->hostname]['pingtimes'][$i];
         }
         
@@ -138,10 +158,11 @@ function show_hosts() {
         
         echo "</td>";
         echo "</td></tr></table>";
-        
-        echo "<td style='background-color: ".$td[$tdc]."' >";
-        echo "$row->timestamp";
         echo "</td>";
+        
+      //  echo "<td style='background-color: ".$td[$tdc]."' >";
+        //echo "$row->timestamp";
+        //echo "</td>";
         
         //echo "<td style='background-color: ".$td[$tdc]."' >";
         //echo "</td>";

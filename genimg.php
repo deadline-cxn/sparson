@@ -8,8 +8,8 @@ imagefilledrectangle($im,0,0,$w,$h,$background_color);
 if($_REQUEST['a']=="pingline") {
     $y1=25+$_REQUEST['pl0']*20;
     $x1=0;
-    for($i=1;$i<9;$i++) {
-        $y2=25+$_REQUEST['pl'.$i]*20;
+    for($i=0;$i<9;$i++) {
+        $y2=25+$_REQUEST['pl'.$i]*40;
         $x2=10+$i*10;
         $linecolor = imagecolorallocatealpha($im, 0, 255, 0, 0);
         imageline ($im , $x1, $y1, $x2, $y2, $linecolor);
