@@ -34,7 +34,7 @@ $url.="&drives=$drives";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Check for update
-if(gethostname()!="area56") {
+if(gethostname()!="area56.sethcoder.com") {
     $current_time=time();
     $last_update_check=file_get_contents("update_check");
     if(  $last_update_check < 0 || 

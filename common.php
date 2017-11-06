@@ -112,7 +112,7 @@ function get_drives() {
         
         // foreach($x as $k => $v) {            echo " $k = $v\n";        }
     }
-    echo $o;
+    //echo $o;
     return $o;
 }
 function file_size($size)  { 
