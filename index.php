@@ -5,29 +5,34 @@
 include("config.php");
 include("common.php");
 $GLOBALS['expired_host_time'] = 310;
-
 session_start();
-// echo $UPDATE_INTERVAL;
+if(!isset($_SESSION['mode'])) { 
+    $_SESSION['mode']="showhosts";
+}
 
-if(isset($_REQUEST['a'])) $a=$_REQUEST['a'];
-
-if(isset($a)) {
+if(isset($_REQUEST['a'])) {
+    $a=$_REQUEST['a'];
     if($a=="time")  echo date("H:i:s");
     if($a=="p")     update_host();
     exit();
 }
 
 show_header();
-echo "<table border=0>";
-echo "<tr>";
-echo "<td>";
-show_hosts();
-echo "</td>";
-echo "<td valign=top>";
-show_hosts_shortlist();
-echo "</td>";
-echo "</tr>";
-echo "</table>";
+
+if($_SESSION["mode"]=="showhosts") {
+    echo "<table border=0>";
+    echo "<tr>";
+    echo "<td>";
+    show_hosts();
+    echo "</td>";
+    echo "<td valign=top>";
+    show_hosts_shortlist();
+    echo "<hr>";
+    show_nmap_scan();
+    echo "</td>";
+    echo "</tr>";
+    echo "</table>";
+}
 
 function show_header() {
     echo "<html>";
@@ -36,17 +41,28 @@ function show_header() {
     $x=guid(1);
     echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"sparson.css?v=$x\"/>";
     echo "</head>";
+    echo "[<a href=\"?mode=showhosts\">Hosts</a>]";
+}
+
+function show_nmap_scan() {
+    echo "NMAP Scan:<hr>";
+    exec("nmap -sP 192.168.1.1/24 | grep -v 'Start' | grep -v 'done' | grep 'Nmap' | sed 's/Nmap scan report for //g'",$r);
+    foreach($r as $k => $v) {
+        echo $v."<br>";
+    }
 }
 
 function show_hosts_shortlist() {
     $r=lib_mysql_query('select * from hosts order by hostname');
-    echo "$r->num_rows hosts reporting<br>";
+    echo "$r->num_rows hosts reporting:<hr>";
     while($row=$r->fetch_object()) {
         while(strlen($row->ip_address)<13) $row->ip_address.="_";
         echo $row->ip_address.":".$row->hostname."<BR>";
         foreach($row as $k => $v) {
         }
     }
+    
+    
 }
 
 function show_hosts() {
@@ -54,11 +70,13 @@ function show_hosts() {
     $td[1]="#040"; 
     $tdc=0;
     echo "<table border=0>";
-    echo "<tr>";
+    
+    /*echo "<tr>";
     echo "<th>Host</th>";
     echo "<th>Network</th>";
     //echo "<th>Last Ping</th>";
     echo "</tr>";
+     */
     $r=lib_mysql_query('select * from hosts order by hostname');
     while($row=$r->fetch_object()) {
         $tdc=$tdc+1; if($tdc>1) $tdc=0;
@@ -86,7 +104,7 @@ function show_hosts() {
         echo "$row->distro ";
         echo "$row->distroversion ";
         echo "$row->distrocodename<br>";
-        echo "<hr>";
+        //echo "<hr>";
         
         echo nl2br($row->drives);
         
@@ -160,12 +178,6 @@ function show_hosts() {
         echo "</td></tr></table>";
         echo "</td>";
         
-      //  echo "<td style='background-color: ".$td[$tdc]."' >";
-        //echo "$row->timestamp";
-        //echo "</td>";
-        
-        //echo "<td style='background-color: ".$td[$tdc]."' >";
-        //echo "</td>";
 
         echo "</tr>";
     }

@@ -54,6 +54,12 @@
 
 body {
     background-color: #000;
+    color: #0F0;
+    font-family: "area56_link";
+    font-size: 20px;
+    font-style: normal; 
+    text-decoration: none;
+    text-shadow: 2 2 25px #000;
 }
 
 td {
@@ -66,7 +72,7 @@ td {
     text-shadow: 2 2 25px #07F;
 }
 
-th {
+th,a {
     color: #FF0;
     #padding: 10px;
     font-family: "area56_link";

@@ -38,7 +38,7 @@ if(gethostname()!="area56.sethcoder.com") {
     $current_time=time();
     $last_update_check=file_get_contents("update_check");
     if(  $last_update_check < 0 || 
-        ($current_time - $last_update_check) > 50) {
+        ($current_time - $last_update_check) > 600) {
         $dir = "/home/sparson/sparson";
         file_put_contents("update_check",$current_time);
         exec("cd $dir;git pull",$r);
