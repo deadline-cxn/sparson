@@ -44,7 +44,7 @@ if(gethostname()!="area56.sethcoder.com") {
         exec("cd $dir;git pull",$r);
         $o="";
         foreach($r as $k => $v) {
-             $o.=date("Y-d-m H:i:s").": ".$v."\n";
+             $o.=date("Y-m-d H:i:s").": ".$v."\n";
         }
         $f=fopen("update.log","a");
         fputs($f,$o);
