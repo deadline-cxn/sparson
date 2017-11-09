@@ -1,11 +1,13 @@
 <?php
-
-////////////////////////////////////////////////////////////////////////////
-// SPARSON.COM 
+/////////////////////////////////////////////////////////////////////////////////
+// SPARSON.COM
+/////////////////////////////////////////////////////////////////////////////////
+include("globals.php");
 include("config.php");
 include("common.php");
-$GLOBALS['expired_host_time'] = 310;
+
 session_start();
+
 if(!isset($_SESSION['mode'])) { 
     $_SESSION['mode']="showhosts";
 }
@@ -61,8 +63,6 @@ function show_hosts_shortlist() {
         foreach($row as $k => $v) {
         }
     }
-    
-    
 }
 
 function show_hosts() {
@@ -70,21 +70,11 @@ function show_hosts() {
     $td[1]="#040"; 
     $tdc=0;
     echo "<table border=0>";
-    
-    /*echo "<tr>";
-    echo "<th>Host</th>";
-    echo "<th>Network</th>";
-    //echo "<th>Last Ping</th>";
-    echo "</tr>";
-     */
     $r=lib_mysql_query('select * from hosts order by hostname');
     while($row=$r->fetch_object()) {
         $tdc=$tdc+1; if($tdc>1) $tdc=0;
-
         echo "<tr>";
-        
         echo "<td style='background-color: ".$td[$tdc]."' >";
-        
         echo "<table border=0><tr><td>";
         $dir=scandir("images");
         foreach($dir as $k => $v) {
@@ -97,28 +87,19 @@ function show_hosts() {
             }
         }
         echo "</td><td>";
-        
         echo "$row->hostname";
         echo "<hr>";
         echo "$row->os ";
         echo "$row->distro ";
         echo "$row->distroversion ";
         echo "$row->distrocodename<br>";
-        //echo "<hr>";
-        
         echo nl2br($row->drives);
-        
         echo "</td></tr></table>";
-        
-        
-        
         echo "</td>";
-        
         echo "<td style='background-color: ".$td[$tdc]."' >";
         echo "<center>$row->ip_address ";
         echo "<table border=0><tr>";
         echo "<td>";
-        
         $c="ping $row->ip_address -c 1";
         exec($c,$ping_result);
         $ping_a=explode("=",$ping_result[1]);
@@ -126,7 +107,6 @@ function show_hosts() {
         echo "<table border=0><tr><td>";
         echo $ping_a."";
         echo "</td><td>";
-        
         if(!isset($_SESSION[$row->hostname])) {
             $_SESSION[$row->hostname]=array();//"what";
             $_SESSION[$row->hostname]['pingtimes']=array();
@@ -141,23 +121,18 @@ function show_hosts() {
             $_SESSION[$row->hostname]['pingtimes'][8]=0;
             $_SESSION[$row->hostname]['pingtimes'][9]=0;
         }
-        
         for($i=0;$i<9;$i++) {
             $_SESSION[$row->hostname]['pingtimes'][$i] = 
             $_SESSION[$row->hostname]['pingtimes'][$i+1];
         }
         $_SESSION[$row->hostname]['pingtimes'][8]=$ping_a;
-  
         $out="?a=pingline&w=90&h=80";
         for($i=8;$i>-1;$i--) {
             $out.="&pl$i=".$_SESSION[$row->hostname]['pingtimes'][$i];
         }
-        
         echo "<img src=\"/genimg.php$out\"> ";
-        
         unset($ping_a);
         unset($ping_result);
-        
         $current_time=time();
         $last_update_time=strtotime($row->timestamp);
         $time_transpired=$current_time-$last_update_time;
@@ -166,25 +141,17 @@ function show_hosts() {
             if($time_transpired>$GLOBALS['expired_host_time']) {
                 $query="delete from `hosts` where `hostname` = '$row->hostname' limit 1";
                 lib_mysql_query($query);
+                unset($_SESSION[$row->hostname]);
             }
         }
-        
-
         echo "</td></tr></table>";
-        
-        
-        
         echo "</td>";
         echo "</td></tr></table>";
         echo "</td>";
-        
-
         echo "</tr>";
     }
     echo "</table>";
-    
-    echo "<meta http-equiv=\"refresh\" content=\"5\">";
-    
+    echo "<meta http-equiv=\"refresh\" content=\"5; url=/\">";
 }
 
 function update_host() {
@@ -196,7 +163,6 @@ function update_host() {
     $distroversion=$_REQUEST['distroversion'];
     $distrocodename=$_REQUEST['distrocodename'];
     $drives=$_REQUEST['drives'];
-    
     $r=lib_mysql_query("select * from hosts where hostname='$hostname';");
     if($r->num_rows==0){
         $id = guid(1);        
@@ -214,6 +180,4 @@ function update_host() {
     $q="update `hosts` set `distrocodename` = '$distrocodename' where `hostname`='$hostname'";  lib_mysql_query($q);
     $q="update `hosts` set `timestamp` = '$datetime' where `hostname` = '$hostname'";           lib_mysql_query($q);
     $q="update `hosts` set `drives` = '$drives' where `hostname` = '$hostname'";                lib_mysql_query($q);
-
-
 }

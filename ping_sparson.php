@@ -42,13 +42,15 @@ if(gethostname()!="area56.sethcoder.com") {
         $dir = "/home/sparson/sparson";
         file_put_contents("update_check",$current_time);
         exec("cd $dir;git pull",$r);
-        $o="";
-        foreach($r as $k => $v) {
-             $o.=date("Y-m-d H:i:s").": ".$v."\n";
+        if(count($r)>1) {
+            $o="";
+            foreach($r as $k => $v) {
+                 $o.=date("Y-m-d H:i:s").": ".$v."\n";
+            }
+            $f=fopen("update.log","a");
+            fputs($f,$o);
+            fclose($f);
         }
-        $f=fopen("update.log","a");
-        fputs($f,$o);
-        fclose($f);
     }
 }
 
